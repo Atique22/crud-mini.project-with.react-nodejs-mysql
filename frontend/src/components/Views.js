@@ -7,11 +7,23 @@ export default function Views() {
 
     const [reviewData, setreviewData] = useState([]);
     //view data
-    useEffect(()=>{
-        axios.get(`${URL}/view`).then((response)=>{
+    const loadUser = async()=>{
+        await axios.get(`${URL}/view`).then((response)=>{
             setreviewData(response.data)
         });
+    }
+    //refresh data
+    useEffect(()=>{
+        loadUser();
     },[]);
+
+
+    
+    //delete function
+    const deleteUser=async(id)=>{
+        await axios.delete(`${URL}/delete/${id}`);
+        loadUser();
+    }
 
 
         return (
@@ -86,11 +98,11 @@ export default function Views() {
                                                 <td className="px-1 py-1">{val.Phone }</td>
                                                 <td className="px-1 py-1">{val.Address }</td>
                                                 <td className="px-1 py-1">{val.Password }</td>
-                                                <td className="px-1 py-1"><Link to="/update/{{id}}"
+                                                <td className="px-1 py-1"><Link to={`/update/${val.id}`}
                                                     className="font-medium text-green-600">Update</Link >
                                                 </td>
-                                                <td className="px-1 py-1"><Link to="/delete/{{id}}"
-                                                    className="font-medium text-red-600">Delete</Link ></td>
+                                                <td className="px-1 py-1"><button onClick={()=>deleteUser(val.id)}
+                                                    className="font-medium text-red-600">Delete</button ></td>
                                             </tr>
                                         })} 
                                         </tbody>
