@@ -41,15 +41,15 @@ app.post('/resgiter_data', (req, res) => {
 
             if (req.body.email == '' || req.body.phone == '' || req.body.name == '' || req.body.address == '' || req.body.password == '' || req.body.c_password == '') {
                 console.log("enter complete requirements;");              
-                return res.json({ require: true ,message: "enter complete requirements"})
+                return res.json({ message: "enter complete requirements"})
             }
             else if (result.length > 0) {
                 console.log("enter unique data;");
-                return res.json({ require: true ,message: "enter unique data!"})
+                return res.json({ message: "enter unique data!"})
             }
             else if (req.body.password !== req.body.c_password) {
                 console.log('enter same password!');
-                return res.json({ require: true ,message: "enter same password!"})
+                return res.json({ message: "enter same password!"})
 
             }
             else {
@@ -61,11 +61,11 @@ app.post('/resgiter_data', (req, res) => {
                     if (err) {
                             
                         console.log("Error while calling Api registration : ",err.message);
-                        return res.json({ success: true ,message: "Duplicate entry plz enter valid"})
+                        return res.json({ message: "Duplicate entry, plz enter valid"})
 
                     } else {
                             console.log('inserted successfully!');
-                            return res.json({ success: true ,message_succes: "inserted successfully!"})
+                            return res.json({ message_succes: "inserted successfully!"})
                     }
                     
                 })
@@ -77,32 +77,32 @@ app.post('/resgiter_data', (req, res) => {
 
 
 //login api call 
-app.get('/login_user', (req, res) => {
-    const { email, password, security } = req.query;
+app.post('/login_user', (req, res) => {
+    const { email, password, security } = req.body;
 
     let qry = "select * from registration where email = ? and password = ?";
     mysql.query(qry, [email, password], (err, result) => {
 
         if (err) throw err;
         else {
-            if (req.query.email == '' || req.query.password == '') {
+            if (req.body.email == '' || req.body.password == '') {
                 console.log("enter complete requirements;");
-                res.render('login', { require: true });
+                return res.json({ message: "enter complete requirements"})
             }
             // if user not found
             else if (result.length <= 0) {
                 console.log("not match");
-                res.render('login', { valid_e_p: true });
+                return res.json({ message: "enter valid email/password"})
             }
             else { // if user found 
                 console.log("login successfully!");
-                let userEmail = req.query.email;
-                if (req.query.security == 'admin') {
+                // let userEmail = req.query.email;
+                if (req.body.security == 'admin') {
                     console.log("admin login successfully!");
-                    res.render('admin_page', { mesg: true, userEmail });
+                    return res.json({ message: "admin login successfully!"})
                 }
                 else
-                    res.render('display_user', { mesg: true, userEmail });
+                    return res.json({ message: "user login successfully!"})
             }
         }
     })
