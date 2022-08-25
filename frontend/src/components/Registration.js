@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+// import axios from 'axios';
 import {Link } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 import {addData} from '../service/Api'
 
 export default function Registration(){
-    
+const navigate = useNavigate();
+
+// const [msg, setMsg] = useState([]);
+//     //MESSAGE VALIDATION
+//     useEffect(()=>{
+//         axios.get(`${URL}/view`).then((response)=>{
+//             setreviewData(response.data)
+//         });
+//     },[]);
 
     const defaultvalue={
         name:'',
@@ -22,7 +31,8 @@ export default function Registration(){
 
     // onclick function
      const addDatadetail=async()=>{
-           await addData(data);
+            await addData(data);
+            return navigate('/login')
         }
 
         return (
@@ -54,8 +64,7 @@ export default function Registration(){
                                                 Registration
                                             </h1>
 
-                                            {/* {{ #if mesg_repeat }} here mesg {{/if}} */}
-                                            {/* if({prop.mesg_repeat}){
+                                            {/* if({mesg_repeat}){
                                                 <h2 className="title-font font-medium text-1.5xl text-red-600 ">Email/Phone already register enter unique data!</h2>
                                             }
                                             if({prop.mesg_pasword})

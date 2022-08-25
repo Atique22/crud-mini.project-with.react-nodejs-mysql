@@ -18,7 +18,6 @@ app.get('/view', (req, res) => {
     mysql.query(qry, (err, result) => {
         if (err) throw err;
         res.send(result);
-        // res.render('view', { view_data: result });
     });
 
 });
@@ -38,6 +37,7 @@ app.post('/resgiter_data', (req, res) => {
             console.log("table data: " + result.email);
             if (req.body.email == '' || req.body.phone == '' || req.body.name == '' || req.body.address == '' || req.body.password == '' || req.body.c_password == '') {
                 console.log("enter complete requirements;");
+                res.send({ require: true },{message: "here is a backend empty message"});
                 // res.render('register', { require: true });
             }
             else if (result.length > 0) {
