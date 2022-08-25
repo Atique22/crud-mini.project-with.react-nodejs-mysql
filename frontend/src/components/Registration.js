@@ -57,19 +57,13 @@ export default function Registration(){
                                             <h1 className="sm:text-2xl text-1xl font-medium title-font mb-3 text-gray-900">
                                                 Registration
                                             </h1>
-
+                                            {/* message alert */}
                                             <h2 className="title-font font-medium text-1.5xl text-red-600 ">{msg.message}</h2>
-                                            {/* if({msg.require==='true'}){
-                                                <h2 className="title-font font-medium text-1.5xl text-red-600 ">{msg.message}</h2>
-                                            }
-                                            if({msg.success==='true'}){
-                                                <h2 className="title-font font-medium text-1.5xl text-green-600 ">{msg.message}</h2>
-                                            } */}
-                                            
-
+                                            <h2 className="title-font font-medium text-1.5xl text-green-600 ">{msg.message_succes}</h2>
+                                          
                                         </div>
                                         <div className="lg:w-5/5 md:w-3/4 mx-auto">
-                                            {/* action */}
+                                            {/* form action */}
                                             <form >
                                                 <div className="flex flex-wrap">
 

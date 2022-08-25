@@ -65,7 +65,7 @@ app.post('/resgiter_data', (req, res) => {
 
                     } else {
                             console.log('inserted successfully!');
-                            return res.json({ success: true ,message: "inserted successfully!"})
+                            return res.json({ success: true ,message_succes: "inserted successfully!"})
                     }
                     
                 })
