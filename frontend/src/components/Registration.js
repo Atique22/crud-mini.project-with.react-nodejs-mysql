@@ -58,12 +58,13 @@ export default function Registration(){
                                                 Registration
                                             </h1>
 
-                                            if({msg.require}){
+                                            <h2 className="title-font font-medium text-1.5xl text-red-600 ">{msg.message}</h2>
+                                            {/* if({msg.require==='true'}){
                                                 <h2 className="title-font font-medium text-1.5xl text-red-600 ">{msg.message}</h2>
                                             }
-                                            else{
+                                            if({msg.success==='true'}){
                                                 <h2 className="title-font font-medium text-1.5xl text-green-600 ">{msg.message}</h2>
-                                            }
+                                            } */}
                                             
 
                                         </div>

@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 3008;
-
 // app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -28,24 +27,25 @@ app.get('/view', (req, res) => {
 //registration api call
 app.post('/resgiter_data', (req, res) => {
     
-    const userData = req.body;
-    console.log(userData);
+        const userData = req.body;
+        console.log(userData);
+
     const { name, email, phone, address, password, c_password } = req.body;
     let qry = "select * from registration where phone = ? or email = ?";
     mysql.query(qry, [email, phone], (err, result) => {
 
         if (err) throw err;
         else {
-            console.log("new data: " + req.body.email);
-            console.log("table data: " + result.email);
+                console.log("new data: " + req.body.email);
+                console.log("table data: " + result.email);
+
             if (req.body.email == '' || req.body.phone == '' || req.body.name == '' || req.body.address == '' || req.body.password == '' || req.body.c_password == '') {
-                console.log("enter complete requirements;");
-                
-                return res.json({ require: true ,message: "here is a backend empty message"})
+                console.log("enter complete requirements;");              
+                return res.json({ require: true ,message: "enter complete requirements"})
             }
             else if (result.length > 0) {
                 console.log("enter unique data;");
-                return res.json({ require: true ,message: "enter unique data"})
+                return res.json({ require: true ,message: "enter unique data!"})
             }
             else if (req.body.password !== req.body.c_password) {
                 console.log('enter same password!');
@@ -57,11 +57,17 @@ app.post('/resgiter_data', (req, res) => {
                 // inserted data
                 let qry2 = "insert into registration values(?,?,?,?,?,?)";
                 mysql.query(qry2, [, name, email, phone, address, password], (err, result2) => {
-                    if (err) throw err;
-                    console.log('inserted successfully!');
-                    return res.json({ success: true ,message: "inserted successfully!"})
-                    // let userEmail = req.body.email;
-                    // res.send('login', { mesg: true, userEmail });
+                    // if (err) throw err;
+                    if (err) {
+                            
+                        console.log("Error while calling Api registration : ",err.message);
+                        return res.json({ success: true ,message: "Duplicate entry plz enter valid"})
+
+                    } else {
+                            console.log('inserted successfully!');
+                            return res.json({ success: true ,message: "inserted successfully!"})
+                    }
+                    
                 })
             }
         }
@@ -153,10 +159,6 @@ app.get('/save_data', function (req, res, next) {
                 console.log("enter complete requirements;");
                 res.render('update_data', { require: true });
             }
-            // else if (result.length > 0) {
-            //     console.log("enter unique data;");
-            //     return res.render('update_data', { mesg_repeat: true });
-            // }
             else if (req.query.password !== req.query.c_password) {
                 console.log('enter same password!');
             }
@@ -198,45 +200,6 @@ app.get('/', (req, res) => {
     res.send("hello home backend");
     // res.render('/');
 });
-
-
-app.get('save_data', async(req, res) => {
-    res.send("hello save backend");
-})
-
-//REGISTRATION PAGE
-app.get('/register', (req, res) => {
-    res.send("hello register backend");
-    // res.render('register');
-});
-
-//LOGIN PAGE
-app.get('/login', (req, res) => {
-    res.send("hello login backend");
-    // res.render('login');
-});
-
-//USER PAGE
-app.get('/display_user', (req, res) => {
-    res.send("hello display_user  backend");
-    // res.render('display_user');
-});
-
-//ADMIN PAGE
-app.get('/admin_page', (req, res) => {
-    res.send("hello admin_page  backend");
-    // res.render('admin_page');
-});
-
-//Update data
-app.get('/update_data', (req, res) => {
-    res.send("hello update_data  backend");
-    // res.render('update_data');
-});
-
-
-
-
 
 
 
