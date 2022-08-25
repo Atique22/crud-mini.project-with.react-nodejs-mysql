@@ -6,10 +6,12 @@ const cors = require('cors');
 const app = express();
 const port = 3008;
 
-app.use(express.json());
+// app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({extended: true}));
+app.use(express.json({limit:"5mb"}));
+
 
 
 //VIEW DATA api call
@@ -25,6 +27,7 @@ app.get('/view', (req, res) => {
 
 //registration api call
 app.post('/resgiter_data', (req, res) => {
+    
     const userData = req.body;
     console.log(userData);
     const { name, email, phone, address, password, c_password } = req.body;
@@ -37,15 +40,17 @@ app.post('/resgiter_data', (req, res) => {
             console.log("table data: " + result.email);
             if (req.body.email == '' || req.body.phone == '' || req.body.name == '' || req.body.address == '' || req.body.password == '' || req.body.c_password == '') {
                 console.log("enter complete requirements;");
-                res.send({ require: true },{message: "here is a backend empty message"});
-                // res.render('register', { require: true });
+                
+                return res.json({ require: true ,message: "here is a backend empty message"})
             }
             else if (result.length > 0) {
                 console.log("enter unique data;");
-                // return res.render('register', { mesg_repeat: true });
+                return res.json({ require: true ,message: "enter unique data"})
             }
             else if (req.body.password !== req.body.c_password) {
                 console.log('enter same password!');
+                return res.json({ require: true ,message: "enter same password!"})
+
             }
             else {
                 console.log("inserted detect");
@@ -54,8 +59,9 @@ app.post('/resgiter_data', (req, res) => {
                 mysql.query(qry2, [, name, email, phone, address, password], (err, result2) => {
                     if (err) throw err;
                     console.log('inserted successfully!');
-                    let userEmail = req.body.email;
-                    // res.render('login', { mesg: true, userEmail });
+                    return res.json({ success: true ,message: "inserted successfully!"})
+                    // let userEmail = req.body.email;
+                    // res.send('login', { mesg: true, userEmail });
                 })
             }
         }

@@ -1,39 +1,33 @@
-import React, { useState, useEffect } from 'react'
-// import axios from 'axios';
+import React, { useState } from 'react'
+import axios from 'axios';
 import {Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import {addData} from '../service/Api'
 
 export default function Registration(){
-const navigate = useNavigate();
 
-// const [msg, setMsg] = useState([]);
-//     //MESSAGE VALIDATION
-//     useEffect(()=>{
-//         axios.get(`${URL}/view`).then((response)=>{
-//             setreviewData(response.data)
-//         });
-//     },[]);
+        const defaultvalue={
+            name:'',
+            email:'',
+            phone:'',
+            address:'',
+            password:''
+            }
+        const [msg, setMsg] = useState({});
+        const [data, setData] = useState(defaultvalue);
+            const handlesubmIt= async (e)=>{
+                e.preventDefault()
+                try {
+                        console.log("Api calling.url");
+                        const dataA= await axios.post(`http://localhost:3008/resgiter_data`, data);
+                        setMsg(dataA.data)
 
-    const defaultvalue={
-        name:'',
-        username:'',
-        email:'',
-        phone:''}
-
-    const [data, setData] = useState(defaultvalue);
-      const onValueChange=(e)=>{
-            console.log(e.target.name,e.target.value);
-            setData({...data,[e.target.name]:e.target.value});
-            // console.log(data);
-        }
-
-
-    // onclick function
-     const addDatadetail=async()=>{
-            await addData(data);
-            return navigate('/login')
-        }
+                } catch (error) {
+                    console.log("Error while calling Api registration : ",error.message);
+                }
+            }
+            const onValueChange=(e)=>{
+                    console.log(e.target.name,e.target.value);
+                    setData({...data,[e.target.name]:e.target.value});
+                }
 
         return (
 
@@ -64,21 +58,18 @@ const navigate = useNavigate();
                                                 Registration
                                             </h1>
 
-                                            {/* if({mesg_repeat}){
-                                                <h2 className="title-font font-medium text-1.5xl text-red-600 ">Email/Phone already register enter unique data!</h2>
+                                            if({msg.require}){
+                                                <h2 className="title-font font-medium text-1.5xl text-red-600 ">{msg.message}</h2>
                                             }
-                                            if({prop.mesg_pasword})
-                                            {
-                                                <h2 className="title-font font-medium text-1.5xl text-red-600 ">Enter same password for confirmation!</h2>
+                                            else{
+                                                <h2 className="title-font font-medium text-1.5xl text-green-600 ">{msg.message}</h2>
                                             }
-                                            if({prop.require}){
-                                                <h2 className="title-font font-medium text-1.5xl text-red-500 ">Enter complete requirement! </h2>
-                                            } */}
+                                            
 
                                         </div>
                                         <div className="lg:w-5/5 md:w-3/4 mx-auto">
                                             {/* action */}
-                                            <form action="" method="">
+                                            <form >
                                                 <div className="flex flex-wrap">
 
                                                     <div className="p-1 w-1/3">
@@ -135,7 +126,7 @@ const navigate = useNavigate();
                                                     </div>
 
                                                     <div className=" p-1 w-full">
-                                                        <button name="submit" onClick={addDatadetail}
+                                                        <button name="submit" onClick={(e)=>handlesubmIt(e)}
                                                             className="flex mx-auto text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
                                                     </div>
 
