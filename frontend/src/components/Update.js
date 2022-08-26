@@ -15,7 +15,6 @@ export default function Update() {
 
     const [msg, setMsg] = useState({});
     const [newdata, setNewdata] = useState({});
-    const [data, setData] = useState(defaultvalue);
     const { id } = useParams();
     console.log(newdata);
 
@@ -32,16 +31,17 @@ export default function Update() {
         e.preventDefault()
         try {
             console.log("Api calling url");
-            const dataA = await axios.put(`http://localhost:3008/resgiter_data/${id}`, data);
-            setMsg(dataA.data)
+            const dataA = await axios.post(`http://localhost:3008/save_data/${id}`, newdata);
+            console(dataA);
+            setMsg(dataA.newdata)
 
         } catch (error) {
             console.log("Error while calling Api update registration : ", error.message);
         }
     }
     const onValueChange = (e) => {
-        console.log(e.target.name, e.target.value);
-        setData({ ...data, [e.target.name]: e.target.value });
+        // console.log(e.target.name, e.target.value);
+        setNewdata({ ...newdata, [e.target.name]: e.target.value });
     }
 
 
@@ -88,7 +88,7 @@ export default function Update() {
                                                 <div className="relative">
                                                     <label htmlFor="name"
                                                         className="leading-7 text-sm text-gray-600">Name</label>
-                                                    <input type="text" id="name" name="name" value={newdata.Name} onChange={(e) => onValueChange(e)}
+                                                    <input type="text" id="name" name="Name" value={newdata.Name} onChange={(e) => onValueChange(e)}
                                                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                 </div>
                                             </div>
@@ -96,7 +96,7 @@ export default function Update() {
                                                 <div className="relative">
                                                     <label htmlFor="email"
                                                         className="leading-7 text-sm text-gray-600">Email</label>
-                                                    <input type="email" id="email" name="email" value={newdata.Email} onChange={(e) => onValueChange(e)}
+                                                    <input type="email" id="email" name="Email" value={newdata.Email} onChange={(e) => onValueChange(e)}
                                                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                 </div>
                                             </div>
@@ -104,7 +104,7 @@ export default function Update() {
                                                 <div className="relative">
                                                     <label htmlFor="phone"
                                                         className="leading-7 text-sm text-gray-600">Phone</label>
-                                                    <input type="tel" id="phone" name="phone" value={newdata.Phone} onChange={(e) => onValueChange(e)}
+                                                    <input type="tel" id="phone" name="Phone" value={newdata.Phone} onChange={(e) => onValueChange(e)}
                                                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                 </div>
                                             </div>
@@ -113,7 +113,7 @@ export default function Update() {
                                                 <div className="relative">
                                                     <label htmlFor="address"
                                                         className="leading-7 text-sm text-gray-600">Address</label>
-                                                    <input type="text" id="address" name="address" value={newdata.Address} onChange={(e) => onValueChange(e)}
+                                                    <input type="text" id="address" name="Address" value={newdata.Address} onChange={(e) => onValueChange(e)}
                                                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                 </div>
                                             </div>
@@ -121,7 +121,7 @@ export default function Update() {
                                                 <div className="relative">
                                                     <label htmlFor="password"
                                                         className="leading-7 text-sm text-gray-600">Password</label>
-                                                    <input type="password" id="password" name="password" onChange={(e) => onValueChange(e)}
+                                                    <input type="password" id="password" name="Password" onChange={(e) => onValueChange(e)}
                                                         value={newdata.Password}
                                                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                 </div>
@@ -132,7 +132,7 @@ export default function Update() {
                                                     <label htmlFor="c_password"
                                                         className="leading-7 text-sm text-gray-600">Confirm
                                                         Password</label>
-                                                    <input type="password" id="c_password" name="c_password" onChange={(e) => onValueChange(e)}
+                                                    <input type="password" id="c_password" name="Password" onChange={(e) => onValueChange(e)}
                                                         value={newdata.Password}
                                                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                 </div>

@@ -143,32 +143,29 @@ app.get('/update/:id', function (req, res, next) {
 
 
 
-//UPDATE DATA api call
-app.post('/save_data', function (req, res, next) {
-    const { id ,name, email, phone, address, password, c_password } = req.body;
-    var UserId = req.query.id; 
-    let qry = "select * from registration where phone = ? or email = ?";
-    mysql.query(qry, [id, email, phone], (err, result) => {
+//UPDATE save DATA api call
+app.post('/save_data/:id', function (req, res) {
+    console.log("you are in in save data");
+    const { id ,Name, Email, Phone, Address, Password } = req.body;
+    var UserId = req.params.id; 
+    console.log("id detect:"+UserId);
+    let qry = "select * from registration where Phone = ? or Email = ?";
+    mysql.query(qry, [id, Email, Phone], (err, result) => {
 
         if (err) throw err;
         else {
-            console.log("new data update email: " + req.body.email);
-            console.log("new data update id: " + req.query.id);
-            if (req.body.email == '' || req.body.phone == '' || req.body.name == '' || req.body.address == '' || req.body.password == '' || req.body.c_password == '') {
+            console.log("new data update Email: " + req.body.Email);
+            if (req.body.Email == '' || req.body.Phone == '' || req.body.Name == '' || req.body.Address == '' || req.body.Password == '') {
                 console.log("enter complete requirements;");
-                // res.render('update_data', { require: true });
-            }
-            else if (req.body.password !== req.body.c_password) {
-                console.log('enter same password!');
+                return res.json({ message: "enter complete requirements"})
             }
             else {
                 console.log("update detect");
-                let qry2 = `UPDATE registration SET id=?, Name=?,Email=?,Phone=?,Address=?,Password=? WHERE id=+${UserId}`;
-                mysql.query(qry2, [id, name, email, phone, address, password], (err, result2) => {
+                let qry2 = `UPDATE registration SET id=?, Name=?,Email=?,Phone=?,Address=?,Password=? WHERE id=${UserId}`;
+                mysql.query(qry2, [id, Name, Email, Phone, Address, Password], (err, result2) => {
                     if (err) throw err;
-                    // console.log(result2);
                     console.log('update successfully!');   
-                    // res.redirect('/view');
+                    return res.json({ message_succes: "inserted successfully!"});
                 });
                 
             }
@@ -176,20 +173,6 @@ app.post('/save_data', function (req, res, next) {
 
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -14,14 +14,6 @@ export default function Registration(){
         const [msg, setMsg] = useState({});
         const [data, setData] = useState(defaultvalue);
 
-        //refresh data
-        // const loadUser = async()=>{
-        //     return await axios.get(`http://localhost:3000`);
-        // }
-        // useEffect(()=>{
-        //     loadUser();
-        // },[]);
-
             const handlesubmIt= async (e)=>{
                 e.preventDefault()
                 try {
@@ -29,7 +21,6 @@ export default function Registration(){
                         const dataA= await axios.post(`http://localhost:3008/resgiter_data`, data);
                         setMsg(dataA.data)
                         // window.location.reload();
-
                 } catch (error) {
                     console.log("Error while calling Api registration : ",error.message);
                 }
