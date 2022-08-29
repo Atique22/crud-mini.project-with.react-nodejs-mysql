@@ -23,9 +23,12 @@ export default function Login() {
                     console.log("Api calling.url");
                     const dataA= await axios.post(`http://localhost:3008/login_user`, data);
                     setMsg(dataA.data)
-                    // if (dataA.data){
-                    //     location('/Admin')
-                    // }
+                    if (dataA.data.message_succes){
+                        location('/Admin')
+                    }
+                    else{
+                        console.log("Enter valid Requirement");
+                    }
 
             } catch (error) {
                 console.log("Error while calling Api login : ",error.message);
@@ -73,10 +76,6 @@ export default function Login() {
 
                                 <div className="container px-3 py-1 mx-auto flex flex-wrap items-center text-white-900">
                                     <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-                                        {/* {{#if mesg }}
-                                        <h2 className="title-font font-medium text-1xl text-green-600 ">Registration
-                                            successfully! {{ userEmail }}</h2>
-                                        {{/if}} */}
 
                                         <h1 className="title-font font-medium text-1xl text-white-900">Slow-carb next level
                                             shoindcgoitch </h1>
@@ -88,6 +87,7 @@ export default function Login() {
                                          <h2 className="text-gray-900 text-lg font-medium title-font mb-3">Sign in</h2>
                                         
                                         <h2 className="title-font font-medium text-1xl text-red-600 ">{msg.message}</h2>
+                                        <h2 className="title-font font-medium text-1xl text-green-600 ">{msg.message_succes}</h2> 
 
                                         <form action="/login_user" method="">
                                             <div className="relative mb-2">

@@ -21,10 +21,12 @@ export default function Registration(){
                         console.log("Api calling.url");
                         const dataA= await axios.post(`http://localhost:3008/resgiter_data`, data);
                         setMsg(dataA.data)
-                        // window.location.reload();
-                        // if (dataA.data){
-                        //     location('/login')
-                        // }
+                        if (dataA.data.message_succes){
+                            location('/login');
+                        }
+                        else{
+                            console.log("Enter valid Requirement");
+                        }
                 } catch (error) {
                     console.log("Error while calling Api registration : ",error.message);
                 }
