@@ -1,5 +1,5 @@
 import React, { useState} from 'react'
-import {Link } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 
@@ -9,6 +9,7 @@ import axios from 'axios';
 export default function Login() {
   
      const [show, setshow] = useState(false); 
+     const location = useNavigate()
 
      const defaultvalue={
         email:'',
@@ -22,9 +23,13 @@ export default function Login() {
                     console.log("Api calling.url");
                     const dataA= await axios.post(`http://localhost:3008/login_user`, data);
                     setMsg(dataA.data)
+                    // if (dataA.data){
+                    //     location('/Admin')
+                    // }
 
             } catch (error) {
                 console.log("Error while calling Api login : ",error.message);
+                alert(error.message);
             }
         }
         const onValueChange=(e)=>{

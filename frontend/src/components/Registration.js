@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import {Link } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 
 export default function Registration(){
 
@@ -13,6 +13,7 @@ export default function Registration(){
             }
         const [msg, setMsg] = useState({});
         const [data, setData] = useState(defaultvalue);
+        const location = useNavigate()
 
             const handlesubmIt= async (e)=>{
                 e.preventDefault()
@@ -21,6 +22,9 @@ export default function Registration(){
                         const dataA= await axios.post(`http://localhost:3008/resgiter_data`, data);
                         setMsg(dataA.data)
                         // window.location.reload();
+                        // if (dataA.data){
+                        //     location('/login')
+                        // }
                 } catch (error) {
                     console.log("Error while calling Api registration : ",error.message);
                 }

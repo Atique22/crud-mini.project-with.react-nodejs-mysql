@@ -16,7 +16,7 @@ export default class App extends Component {
         <div className="relative float-left w-full h-screen bg-no-repeat bg-cover bg-center overflow-hidden">
 
           <header className="text-white-200 body-font ">
-            <div className="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
+            <div className="container  flex flex-wrap p-3 flex-col md:flex-row items-center">
               <h1 className="flex title-font font-medium items-center text-gray-900 mb-1 md:mb-0">
                 Clicky Intern
               </h1>

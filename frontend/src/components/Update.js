@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate , useParams } from "react-router-dom";
 import axios from 'axios';
 
 export default function Update() {
@@ -17,6 +17,7 @@ export default function Update() {
     const [newdata, setNewdata] = useState({});
     const { id } = useParams();
     console.log(newdata);
+    const location = useNavigate();
 
     const loadUser = async () => {
         const result = await axios.get(`http://localhost:3008/update/${id}`);
@@ -32,11 +33,15 @@ export default function Update() {
         try {
             console.log("Api calling url");
             const dataA = await axios.post(`http://localhost:3008/save_data/${id}`, newdata);
-            console(dataA);
-            setMsg(dataA.newdata)
+            console.log(dataA);
+            setMsg(dataA?.newdata)
+            if (dataA){
+                location('/view')
+            }
 
         } catch (error) {
             console.log("Error while calling Api update registration : ", error.message);
+            alert(error.message)
         }
     }
     const onValueChange = (e) => {
